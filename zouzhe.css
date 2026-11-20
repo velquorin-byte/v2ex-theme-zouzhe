@@ -1,0 +1,417 @@
+/* ==========================================================
+ * V2EX 主题 · 奏折（Zouzhe）
+ * 宣纸 · 经折 · 红格 · 朱批 · 黄绫
+ * 用法：V2EX 设置 → 开启「使用自定义 CSS」→ 粘贴本文件全部内容
+ * ========================================================== */
+
+/* 可选：霞鹜文楷 webfont（没装楷体的系统建议打开；必须放在文件最顶部）
+@import url("https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css");
+*/
+
+/* ---------- 一、变量：改这里即可换色 / 关掉彩蛋 ---------- */
+:root {
+  /* 纸与墨 */
+  --zz-desk:        #3a2a20;   /* 案几（页面底） */
+  --zz-desk-grain:  #33241b;
+  --zz-paper:       #f3ead3;   /* 宣纸 */
+  --zz-paper-deep:  #e9dcbc;   /* 纸的旧边 / 悬停 */
+  --zz-fold:        rgba(120, 90, 50, .10); /* 经折折痕 */
+  --zz-fold-hi:     rgba(255, 255, 255, .25); /* 折痕受光面 */
+  --zz-ink:         #2a2420;   /* 墨 */
+  --zz-ink-soft:    #6b5d4f;   /* 淡墨（时间、点击数） */
+  --zz-ink-faint:   #a4937b;
+  /* 朱砂与黄绫 */
+  --zz-cinnabar:    #b23a2b;   /* 朱砂 */
+  --zz-cinnabar-dk: #8e2a1f;
+  --zz-seal-text:   #fbf3e2;
+  --zz-silk:        #d6ad4b;   /* 明黄绫 */
+  --zz-silk-dk:     #b88f33;
+  --zz-rule:        rgba(178, 58, 43, .45); /* 红格线 */
+  /* 字体 */
+  --zz-kai:  "LXGW WenKai", "Kaiti SC", "STKaiti", "KaiTi", "BiauKai", "楷体", serif;
+  --zz-song: "Songti SC", "Noto Serif SC", "Noto Serif CJK SC", "Source Han Serif SC", "STSong", "SimSun", serif;
+  --zz-mono: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  /* 版式彩蛋：设为 "" 即关闭 */
+  --zz-title-before: "奏为";
+  --zz-title-after:  "事";
+  --zz-closing:      "谨奏";
+  --zz-zhupi:        "知道了";
+  --zz-op:           "臣";      /* 楼主印章上的字 */
+}
+
+/* 夜间：灯下批折 —— 以 V2EX 自带夜间模式为开关 */
+body:has(#Wrapper.Night) {
+  --zz-desk:        #141010;
+  --zz-desk-grain:  #110d0d;
+  --zz-paper:       #27211b;
+  --zz-paper-deep:  #312920;
+  --zz-fold:        rgba(0, 0, 0, .28);
+  --zz-fold-hi:     rgba(255, 255, 255, .025);
+  --zz-ink:         #e7dbc2;
+  --zz-ink-soft:    #a89a83;
+  --zz-ink-faint:   #7a6d5c;
+  --zz-cinnabar:    #c4513c;
+  --zz-cinnabar-dk: #a3402f;
+  --zz-seal-text:   #f6e9d0;
+  --zz-silk:        #8c6f2c;
+  --zz-silk-dk:     #6d5622;
+  --zz-rule:        rgba(208, 86, 63, .40);
+}
+
+/* ---------- 二、案几 ---------- */
+body,
+#Wrapper,
+#Wrapper.Night {
+  background-color: var(--zz-desk) !important;
+  background-image:
+    repeating-linear-gradient(92deg, transparent 0 7px, var(--zz-desk-grain) 7px 9px, transparent 9px 23px),
+    radial-gradient(ellipse at 50% 0%, rgba(255, 220, 160, .06), transparent 60%) !important;
+  color: var(--zz-ink);
+  font-family: var(--zz-song);
+}
+body, td, th, input, textarea, select, button { font-family: var(--zz-song); }
+a, a:link, a:visited, a.dark, a.gray { color: var(--zz-ink); }
+a:hover { color: var(--zz-cinnabar) !important; text-decoration: none; }
+.gray, .fade, .ago, .snow, small.gray, span.small.fade { color: var(--zz-ink-soft) !important; }
+
+/* ---------- 三、顶栏：黄绫封面 ---------- */
+#Top {
+  background-color: var(--zz-silk) !important;
+  background-image:
+    radial-gradient(circle at 25% 30%, rgba(255,255,255,.18) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 75% 70%, rgba(255,255,255,.18) 0 1.5px, transparent 2px),
+    linear-gradient(180deg, rgba(255,255,255,.12), rgba(0,0,0,.06)) !important;
+  background-size: 14px 14px, 14px 14px, auto !important;
+  border-bottom: 3px double var(--zz-silk-dk) !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,.35);
+}
+#Top a, #Top a.top { color: #3a2a10 !important; font-family: var(--zz-kai); }
+body:has(#Wrapper.Night) #Top a { color: #f0dfb4 !important; }
+body:has(#Wrapper.Night) #search-container,
+body:has(#Wrapper.Night) #search { background: rgba(20, 15, 10, .45) !important; color: var(--zz-ink) !important; }
+
+/* Logo → 朱印 */
+#Logo {
+  background-image: none !important;
+  width: auto !important;
+  height: auto !important;
+  display: inline-block;
+}
+#Logo::after {
+  content: "V2EX";
+  display: inline-block;
+  padding: 2px 8px;
+  font: 700 18px/1.3 var(--zz-kai);
+  letter-spacing: 2px;
+  color: var(--zz-seal-text);
+  background: var(--zz-cinnabar);
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 2px var(--zz-cinnabar), inset 0 0 0 3px var(--zz-seal-text);
+  transform: rotate(-2deg);
+}
+
+#search-container, #search {
+  background: rgba(255, 250, 235, .55) !important;
+  border: 1px solid var(--zz-silk-dk) !important;
+  border-radius: 2px !important;
+  color: var(--zz-ink) !important;
+}
+
+/* ---------- 四、宣纸 + 经折 + 红格 ---------- */
+.box {
+  position: relative;
+  background-color: var(--zz-paper) !important;
+  background-image:
+    /* 经折折痕：每 240px 一折，阴阳两面 */
+    repeating-linear-gradient(90deg,
+      transparent 0 238px, var(--zz-fold) 238px 239px,
+      var(--zz-fold-hi) 239px 240px),
+    /* 纸纹 */
+    radial-gradient(rgba(140,110,60,.05) 1px, transparent 1.2px) !important;
+  background-size: auto, 5px 5px !important;
+  border: none !important;
+  border-radius: 1px !important;
+  /* 红格：外粗内细的双线框 */
+  box-shadow:
+    inset 0 0 0 6px var(--zz-paper),
+    inset 0 0 0 7px var(--zz-rule),
+    inset 0 0 0 9px var(--zz-paper),
+    inset 0 0 0 10px var(--zz-rule),
+    0 3px 12px rgba(0,0,0,.35) !important;
+  padding: 8px;
+  color: var(--zz-ink);
+}
+.box .cell, .box .inner, .box .header, .box .subtle {
+  background: transparent !important;
+  border-bottom: 1px solid var(--zz-rule) !important;
+  border-color: var(--zz-rule) !important;
+}
+.box > .cell:last-child, .box > .inner:last-child { border-bottom: none !important; }
+.cell.item:hover { background: var(--zz-paper-deep) !important; }
+
+/* 侧栏标题 */
+#Rightbar .box .cell:first-child .fade,
+#Rightbar .box > .cell:first-child {
+  font-family: var(--zz-kai);
+  letter-spacing: 1px;
+}
+
+/* ---------- 五、标签页：当前项为朱印 ---------- */
+#Tabs { padding: 12px 14px !important; }
+a.tab, a.tab:visited {
+  font-family: var(--zz-kai);
+  font-size: 15px;
+  color: var(--zz-ink) !important;
+  background: transparent !important;
+  border-radius: 2px !important;
+  padding: 4px 9px !important;
+}
+a.tab:hover { background: var(--zz-paper-deep) !important; }
+a.tab_current, a.tab_current:visited {
+  font-family: var(--zz-kai);
+  font-size: 15px;
+  color: var(--zz-seal-text) !important;
+  background: var(--zz-cinnabar) !important;
+  border-radius: 2px !important;
+  padding: 4px 9px !important;
+  box-shadow: inset 0 0 0 1px var(--zz-cinnabar), inset 0 0 0 2px var(--zz-seal-text);
+}
+#SecondaryTabs a { color: var(--zz-ink-soft) !important; font-family: var(--zz-kai); }
+
+/* ---------- 六、帖子列表 ---------- */
+.item_title, .item_title a, a.topic-link, a.topic-link:link {
+  font-family: var(--zz-kai);
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--zz-ink) !important;
+}
+a.topic-link:visited { color: var(--zz-ink-faint) !important; }
+.topic_info, .topic_info a { color: var(--zz-ink-soft) !important; }
+.topic_info strong a { color: var(--zz-ink) !important; }
+
+/* 节点 → 签条 */
+a.node, a.node:visited {
+  font-family: var(--zz-kai);
+  color: var(--zz-ink) !important;
+  background: var(--zz-paper-deep) !important;
+  border: 1px solid var(--zz-rule);
+  border-radius: 0 !important;
+  padding: 1px 6px !important;
+}
+a.node:hover { border-color: var(--zz-cinnabar); }
+
+/* 回复数 → 小朱印 */
+a.count_livid, a.count_orange {
+  font-family: var(--zz-kai);
+  font-weight: 700;
+  color: var(--zz-seal-text) !important;
+  background: var(--zz-cinnabar) !important;
+  border-radius: 2px !important;
+  padding: 2px 8px !important;
+  transform: rotate(-3deg);
+  display: inline-block;
+}
+a.count_livid:visited, a.count_orange:visited { background: var(--zz-ink-faint) !important; }
+
+/* 头像：方形，像贴在折上的小像 */
+img.avatar {
+  border-radius: 2px !important;
+  box-shadow: 0 0 0 1px var(--zz-rule);
+  filter: sepia(.18) saturate(.9);
+}
+
+/* ---------- 七、帖子页：奏为……事 / 谨奏 / 朱批 ---------- */
+.header { position: relative; padding: 18px 20px 16px !important; }
+.header h1 {
+  font-family: var(--zz-kai);
+  font-size: 26px !important;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: .5px;
+  color: var(--zz-ink);
+  margin: 6px 0 10px;
+}
+.header h1::before { content: var(--zz-title-before); margin-right: .3em; color: var(--zz-ink-soft); }
+.header h1::after  { content: var(--zz-title-after);  margin-left: .2em;  color: var(--zz-ink-soft); }
+
+/* 朱批：盖在帖子头部右下 */
+.header::after {
+  content: var(--zz-zhupi);
+  position: absolute;
+  right: 92px;
+  bottom: 10px;
+  font: 700 30px/1 var(--zz-kai);
+  color: var(--zz-cinnabar);
+  opacity: .82;
+  transform: rotate(-8deg);
+  text-shadow: 0 0 1px var(--zz-cinnabar);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+body:has(#Wrapper.Night) .header::after { mix-blend-mode: normal; }
+
+/* 正文 */
+.topic_content, .topic_content p, .markdown_body, .reply_content {
+  font-family: var(--zz-song);
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--zz-ink) !important;
+}
+.topic_content { padding: 4px 8px; }
+.header + .cell .topic_content::after {
+  content: var(--zz-closing);
+  display: block;
+  text-align: right;
+  margin-top: 1.2em;
+  font: 20px/1 var(--zz-kai);
+  letter-spacing: 6px;
+  color: var(--zz-ink);
+}
+/* 附言 → 夹片 */
+.subtle {
+  background: var(--zz-paper-deep) !important;
+  border-left: 3px solid var(--zz-cinnabar) !important;
+}
+.subtle .fade { font-family: var(--zz-kai); }
+
+/* 正文里的标题 / 引用 / 代码 */
+.markdown_body h1, .markdown_body h2, .markdown_body h3,
+.topic_content h1, .topic_content h2, .topic_content h3 {
+  font-family: var(--zz-kai);
+  border-bottom: 1px solid var(--zz-rule) !important;
+  color: var(--zz-ink);
+}
+.markdown_body blockquote, .topic_content blockquote {
+  border-left: 3px solid var(--zz-silk-dk) !important;
+  background: rgba(214, 173, 75, .10);
+  color: var(--zz-ink-soft);
+  font-family: var(--zz-kai);
+}
+pre, code, .markdown_body pre, .markdown_body code {
+  font-family: var(--zz-mono) !important;
+  background: rgba(120, 90, 50, .08) !important;
+  border: 1px solid rgba(120, 90, 50, .18) !important;
+  border-radius: 2px !important;
+  color: var(--zz-ink) !important;
+}
+.markdown_body pre code, pre code { border: none !important; background: none !important; }
+.topic_content img, .reply_content img, .markdown_body img {
+  border: 6px solid #fff8e8;
+  box-shadow: 0 0 0 1px var(--zz-rule);
+}
+
+/* ---------- 八、回复 ---------- */
+.reply_content { font-size: 15px; }
+.box .cell[id^="r_"] strong a.dark { font-family: var(--zz-kai); font-size: 15px; }
+
+/* 楼层号 */
+span.no {
+  font-family: var(--zz-kai);
+  color: var(--zz-cinnabar) !important;
+  background: transparent !important;
+  border: 1px solid var(--zz-rule);
+  border-radius: 2px !important;
+  padding: 0 6px !important;
+}
+
+/* 楼主徽章 → 「臣」字印 */
+.badge.op {
+  font-size: 0 !important;
+  background: var(--zz-cinnabar) !important;
+  border: none !important;
+  border-radius: 2px !important;
+  padding: 0 !important;
+  width: 20px; height: 20px;
+  display: inline-flex !important;
+  align-items: center; justify-content: center;
+  vertical-align: middle;
+  transform: rotate(-4deg);
+}
+.badge.op::after {
+  content: var(--zz-op);
+  font: 700 13px/1 var(--zz-kai);
+  color: var(--zz-seal-text);
+}
+.badge.mod {
+  background: var(--zz-silk-dk) !important;
+  color: var(--zz-seal-text) !important;
+  border: none !important;
+  font-family: var(--zz-kai);
+}
+
+/* 嵌套 / 缩进回复：细红线如夹签
+   ※ V2EX 新版缩进回复的具体结构请在 DevTools 里核对，必要时改此选择器 */
+.box .cell .cell {
+  border-left: 2px solid var(--zz-rule) !important;
+  border-bottom: none !important;
+  margin-left: 4px;
+  padding-left: 12px !important;
+}
+.box .cell .cell .cell { border-left-style: dashed !important; }
+
+/* 感谢 / 收藏等按钮 */
+.topic_buttons {
+  background: transparent !important;
+  border-top: 1px solid var(--zz-rule);
+  font-family: var(--zz-kai);
+}
+.topic_buttons a.tb, .thank_area a { color: var(--zz-ink-soft) !important; }
+
+/* ---------- 九、按钮 → 印泥 ---------- */
+.super.button, input.super.button, button.super.button {
+  font-family: var(--zz-kai) !important;
+  color: var(--zz-seal-text) !important;
+  background: var(--zz-cinnabar) !important;
+  border: 1px solid var(--zz-cinnabar-dk) !important;
+  border-radius: 2px !important;
+  text-shadow: none !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.25) !important;
+}
+.super.button:hover { background: var(--zz-cinnabar-dk) !important; color: var(--zz-seal-text) !important; }
+.normal.button {
+  font-family: var(--zz-kai) !important;
+  color: var(--zz-ink) !important;
+  background: var(--zz-paper-deep) !important;
+  border: 1px solid var(--zz-rule) !important;
+  border-radius: 2px !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+/* 输入框：信笺 */
+textarea, input.sl, input.sll, .mll, #reply_content {
+  background: #fbf6e8 !important;
+  background-image: repeating-linear-gradient(180deg, transparent 0 27px, var(--zz-rule) 27px 28px) !important;
+  line-height: 28px !important;
+  color: var(--zz-ink) !important;
+  border: 1px solid var(--zz-rule) !important;
+  border-radius: 2px !important;
+  font-family: var(--zz-song) !important;
+}
+body:has(#Wrapper.Night) textarea,
+body:has(#Wrapper.Night) #reply_content { background-color: #201b16 !important; }
+
+/* 分页 */
+a.page_normal, a.page_current, span.page_current {
+  font-family: var(--zz-kai);
+  border-radius: 2px !important;
+  border: 1px solid var(--zz-rule) !important;
+  background: transparent !important;
+  color: var(--zz-ink) !important;
+}
+a.page_current, span.page_current {
+  background: var(--zz-cinnabar) !important;
+  color: var(--zz-seal-text) !important;
+}
+
+/* ---------- 十、页脚：落款 ---------- */
+#Bottom {
+  background: transparent !important;
+  border-top: 3px double var(--zz-silk-dk) !important;
+  color: var(--zz-ink-faint) !important;
+  font-family: var(--zz-kai);
+}
+#Bottom a { color: var(--zz-silk) !important; }
+
+/* 选中文字 */
+::selection { background: rgba(178, 58, 43, .25); }
